@@ -1,17 +1,35 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>
-      Tab 2
-    </ion-title>
+<ion-header>
+  <ion-toolbar class="titulo">
+    <ion-title class="ion-text-center">Gafete Digital</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Tab 2</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content>
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
 
-  <app-explore-container name="Tab 2 page"></app-explore-container>
+  <!-- Contenido principal -->
+  <ion-card class="details-card">
+    <ion-card-content>
+      <div class="qr-container" *ngIf="data!=''">
+        <!-- QR Code -->
+        <qrcode [qrdata]="data" [width]="256" [errorCorrectionLevel]="'M'"></qrcode>
+      </div>
+      <ion-list>
+        <ion-item *ngIf="!esContrasena">
+          <ion-label>ID:</ion-label>
+          <ion-text>{{ id }}</ion-text>
+        </ion-item>
+        <ion-item>
+          <ion-label>Nombre:</ion-label>
+          <ion-text>{{ nombre }}</ion-text>
+        </ion-item>
+        <ion-item>
+          <ion-label>Tipo de cuenta:</ion-label>
+          <ion-text>{{ tipoCuenta }}</ion-text>
+        </ion-item>
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
 </ion-content>

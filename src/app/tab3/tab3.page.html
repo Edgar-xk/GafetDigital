@@ -1,17 +1,46 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title>
-      Tab 3
+      Mis Identificaciones
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Tab 3</ion-title>
-    </ion-toolbar>
-  </ion-header>
-
-  <app-explore-container name="Tab 3 page"></app-explore-container>
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+  <cdk-virtual-scroll-viewport itemSize="100" minBufferPx="900" maxBufferPx="1300">
+    <ion-item *cdkVirtualFor="let identificacion of identificaciones; let index" lines="full" class="identificacion-item">
+      
+      <!-- Contenedor de la información de la identificación -->
+      <ion-card class="identificacion-card">
+        <ion-card-header>
+          <ion-card-title>{{ identificacion.name }}</ion-card-title>
+        </ion-card-header>
+        
+        <ion-card-content>
+          <div class="info-item" *ngIf="!identificacion.esContrasena">
+            <ion-label>ID o URL:</ion-label>
+            <span>{{ identificacion.id }}</span>
+          </div>
+          <div class="info-item">
+            <ion-label>Tipo de Cuenta:</ion-label>
+            <span>{{ identificacion.accountType }}</span>
+          </div>
+        </ion-card-content>
+        
+        <!-- Botones de acción -->
+        
+          <ion-button  fill="clear" color="primary" (click)="Seleccionar(index)">
+            <ion-icon name="id-card-outline"></ion-icon>Seleccionar
+          </ion-button>
+          
+          <ion-button  fill="clear" color="danger" (click)="Eliminar(index)">
+            <ion-icon name="trash-outline"></ion-icon>Eliminar
+          </ion-button>
+        
+      </ion-card>
+    </ion-item>
+  </cdk-virtual-scroll-viewport>
 </ion-content>
